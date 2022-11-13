@@ -1,30 +1,27 @@
 extends Node
 
+
+const CONNECTION_FAILED := "connection_failed"
+
 export(PackedScene) var mob_scene: PackedScene
+
 var score: int
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if $ScoreTimer.connect("timeout", self, "_on_ScoreTimer_timeout") != OK: print_debug(CONNECTION_FAILED)
+	if $StartTimer.connect("timeout", self, "_on_StartTimer_timeout") != OK: print_debug(CONNECTION_FAILED)
+	if $MobTimer.connect("timeout", self, "_on_MobTimer_timeout") != OK: print_debug(CONNECTION_FAILED)
+	if $HUD.connect("start_game", self, "new_game") != OK: print_debug(CONNECTION_FAILED)
+	if $Player.connect("hit", self, "game_over") != OK: print_debug(CONNECTION_FAILED)
+
 	randomize()
-
-	var mob_timer = get_node("MobTimer")
-	mob_timer.connect("timeout", self, "_on_MobTimer_timeout")
-
-	var player = get_node("Player")
-	player.connect("hit", self, "game_over")
-
-	var score_timer = get_node("ScoreTimer")
-	score_timer.connect("timeout", self, "_on_ScoreTimer_timeout")
-
-	var start_timer = get_node("StartTimer")
-	start_timer.connect("timeout", self, "_on_StartTimer_timeout")
-
-	new_game()
 
 
 func _on_ScoreTimer_timeout() -> void:
 	score += 1
+	$HUD.update_score(score)
 
 
 func _on_StartTimer_timeout() -> void:
@@ -61,9 +58,16 @@ func _on_MobTimer_timeout() -> void:
 func game_over() -> void:
 	$ScoreTimer.stop()
 	$MobTimer.stop()
+	$HUD.show_game_over()
+	get_tree().call_group("mobs", "queue_free")
+	$DeathSound.play()
+	$Music.stop()
 
 
 func new_game() -> void:
 	score = 0
+	$HUD.update_score(score)
+	$HUD.show_message("Get Ready")
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
+	$Music.play()
