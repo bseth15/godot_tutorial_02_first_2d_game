@@ -1,0 +1,70 @@
+{
+	"folders": [
+		{
+			// workspace root directory
+			"path": "../res",
+			"name": "res://"
+		}
+	],
+	"extensions": {
+		"recommendations": [
+			"GitHub.vscode-pull-request-github",
+			"eamodio.gitlens",
+			// official godot extension
+			"geequlim.godot-tools"
+		]
+	},
+	"settings": {
+		// white space settings to reduce file size
+		"editor.insertSpaces": false,
+		"editor.trimAutoWhitespace": true,
+		"editor.renderFinalNewline": true,
+		"editor.renderWhitespace": "selection",
+		"files.insertFinalNewline": true,
+		"files.trimFinalNewlines": true,
+		"files.trimTrailingWhitespace": true,
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"**/Thumbs.db": true,
+			"**/*.import": true
+		},
+		"files.eol": "\n",
+		// language overrides
+		"[gdscript]": {
+			"editor.tabSize": 4,
+			"editor.rulers": [
+				{
+					"column": 120
+				}
+			],
+			"editor.wordWrap": "wordWrapColumn",
+			"editor.wordWrapColumn": 120,
+			"editor.wrappingStrategy": "simple",
+			"editor.wrappingIndent": "deepIndent"
+		},
+		// Verify settings match: Editor > Editor Settings... > Network > Language Server
+		"godot_tools.gdscript_lsp_server_host": "127.0.0.1",
+		"godot_tools.gdscript_lsp_server_port": 6008
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			// Godot Debugger
+			{
+				"name": "GDScript Godot",
+				"type": "godot",
+				"request": "launch",
+				"project": "${workspaceFolder}",
+				// Verify settings match: Editor > Editor Settings... > Network > Debug
+				"port": 6007,
+				"address": "127.0.0.1",
+				"launch_game_instance": true,
+				"launch_scene": false
+			}
+		]
+	}
+}
