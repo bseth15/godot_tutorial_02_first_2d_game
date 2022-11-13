@@ -38,11 +38,11 @@
 			"editor.tabSize": 4,
 			"editor.rulers": [
 				{
-					"column": 120
+					"column": 119
 				}
 			],
 			"editor.wordWrap": "wordWrapColumn",
-			"editor.wordWrapColumn": 120,
+			"editor.wordWrapColumn": 119,
 			"editor.wrappingStrategy": "simple",
 			"editor.wrappingIndent": "deepIndent"
 		},
