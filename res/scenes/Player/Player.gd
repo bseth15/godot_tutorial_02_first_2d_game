@@ -2,17 +2,16 @@ extends Area2D
 
 signal hit
 
+const CONNECTION_FAILED := "connection_failed"
+
 export(int) var speed: int = 400 # How fast the player will move (pixels/sec).
 var screen_size: Vector2 # Size of the game window.
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if connect("body_entered", self, "_on_Player_body_entered") != OK: print_debug(CONNECTION_FAILED)
 	screen_size = get_viewport_rect().size.abs()
-
-	var player = self
-	player.connect("body_entered", self, "_on_Player_body_entered")
-
 	hide()
 
 
